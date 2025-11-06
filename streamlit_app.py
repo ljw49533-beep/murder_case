@@ -48,7 +48,7 @@ if 'victim_sex' in df.columns and selected_sexes:
 if 'age_group' in df.columns and selected_ages:
     filtered_df = filtered_df[filtered_df['age_group'].isin(selected_ages)]
 
-st.title('미국 미제 살인사건 대시보드')
+st.title('미국 주요 4도시 미제 살인사건 대시보드')
 st.write(f"필터 적용 사건 수: {len(filtered_df):,}건")
 
 # 도시 좌표 정보
