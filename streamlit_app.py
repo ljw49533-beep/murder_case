@@ -50,48 +50,51 @@ if 'disposition' in df.columns:
 st.title('미국 미제 살인사건 대시보드')
 st.write(f"필터 적용 사건 수: {len(filtered):,}건")
 
-# 탭 UI
 tab1, tab2, tab3 = st.tabs(["요약 대시보드", "지도 분석", "상세 데이터"])
 
 with tab1:
-    col1, col2 = st.columns(2)
-    with col1:
-        if 'year' in filtered.columns and not filtered.empty:
-            year_ct = filtered['year'].value_counts().sort_index().reset_index()
-            year_ct.columns = ['year', 'count']
-            fig_year = px.line(year_ct, x='year', y='count', markers=True, title='연도별 사건 추이')
-            st.plotly_chart(fig_year, use_container_width=True)
-        if 'month' in filtered.columns and not filtered.empty:
-            month_ct = filtered['month'].value_counts().sort_index().reset_index()
-            month_ct.columns = ['month', 'count']
-            fig_month = px.bar(month_ct, x='month', y='count', color='month', title='월별 사건 분포')
-            st.plotly_chart(fig_month, use_container_width=True)
-        if 'age_group' in filtered.columns and not filtered.empty:
-            age_count = filtered['age_group'].value_counts().sort_index().reset_index()
-            age_count.columns = ['age_group', 'count']
-            fig_age = px.bar(age_count, x='age_group', y='count', color='age_group', title='피해자 나이대별 사건수')
-            st.plotly_chart(fig_age, use_container_width=True)
-    with col2:
-        if 'victim_race' in filtered.columns and not filtered.empty:
-            race_count = filtered['victim_race'].value_counts().reset_index()
-            race_count.columns = ['victim_race', 'count']
-            fig_race = px.bar(race_count, x='victim_race', y='count', color='victim_race', title='피해자 인종별 사건수')
-            st.plotly_chart(fig_race, use_container_width=True)
-        if 'victim_sex' in filtered.columns and not filtered.empty:
-            sex_count = filtered['victim_sex'].value_counts().reset_index()
-            sex_count.columns = ['victim_sex', 'count']
-            fig_sex = px.bar(sex_count, x='victim_sex', y='count', color='victim_sex', title='피해자 성별 사건수')
-            st.plotly_chart(fig_sex, use_container_width=True)
-        if 'disposition' in filtered.columns and not filtered.empty:
-            disp_count = filtered['disposition'].value_counts().reset_index()
-            disp_count.columns = ['disposition', 'count']
-            fig_disp = px.pie(disp_count, names='disposition', values='count', title='사건 상태 분포')
-            st.plotly_chart(fig_disp, use_container_width=True)
-        if 'state' in filtered.columns and not filtered.empty:
-            state_count = filtered['state'].value_counts().reset_index()
-            state_count.columns = ['state', 'count']
-            fig_state = px.bar(state_count, x='state', y='count', color='state', title='주별 사건수')
-            st.plotly_chart(fig_state, use_container_width=True)
+    if 'year' in filtered.columns and not filtered.empty:
+        st.subheader('연도별 사건수')
+        year_ct = filtered['year'].value_counts().sort_index().reset_index()
+        year_ct.columns = ['year', 'count']
+        fig_year = px.line(year_ct, x='year', y='count', markers=True)
+        st.plotly_chart(fig_year, use_container_width=True)
+    if 'month' in filtered.columns and not filtered.empty:
+        st.subheader('월별 사건수')
+        month_ct = filtered['month'].value_counts().sort_index().reset_index()
+        month_ct.columns = ['month', 'count']
+        fig_month = px.bar(month_ct, x='month', y='count', color='month')
+        st.plotly_chart(fig_month, use_container_width=True)
+    if 'age_group' in filtered.columns and not filtered.empty:
+        st.subheader('피해자 나이대별 사건수')
+        age_count = filtered['age_group'].value_counts().sort_index().reset_index()
+        age_count.columns = ['age_group', 'count']
+        fig_age = px.bar(age_count, x='age_group', y='count', color='age_group')
+        st.plotly_chart(fig_age, use_container_width=True)
+    if 'victim_race' in filtered.columns and not filtered.empty:
+        st.subheader('피해자 인종별 사건수')
+        race_count = filtered['victim_race'].value_counts().reset_index()
+        race_count.columns = ['victim_race', 'count']
+        fig_race = px.bar(race_count, x='victim_race', y='count', color='victim_race')
+        st.plotly_chart(fig_race, use_container_width=True)
+    if 'victim_sex' in filtered.columns and not filtered.empty:
+        st.subheader('피해자 성별 사건수')
+        sex_count = filtered['victim_sex'].value_counts().reset_index()
+        sex_count.columns = ['victim_sex', 'count']
+        fig_sex = px.bar(sex_count, x='victim_sex', y='count', color='victim_sex')
+        st.plotly_chart(fig_sex, use_container_width=True)
+    if 'disposition' in filtered.columns and not filtered.empty:
+        st.subheader('사건 상태 분포')
+        disp_count = filtered['disposition'].value_counts().reset_index()
+        disp_count.columns = ['disposition', 'count']
+        fig_disp = px.pie(disp_count, names='disposition', values='count')
+        st.plotly_chart(fig_disp, use_container_width=True)
+    if 'state' in filtered.columns and not filtered.empty:
+        st.subheader('주별 사건수')
+        state_count = filtered['state'].value_counts().reset_index()
+        state_count.columns = ['state', 'count']
+        fig_state = px.bar(state_count, x='state', y='count', color='state')
+        st.plotly_chart(fig_state, use_container_width=True)
 
 with tab2:
     st.subheader('사건 현장 지도')
