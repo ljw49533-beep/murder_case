@@ -17,6 +17,7 @@ def load_data():
 
 df = load_data()
 
+# 필터 옵션
 cities = sorted(df['city'].dropna().unique()) if 'city' in df.columns else []
 victim_races = sorted(df['victim_race'].dropna().unique()) if 'victim_race' in df.columns else []
 victim_sexes = sorted(df['victim_sex'].dropna().unique()) if 'victim_sex' in df.columns else []
@@ -96,7 +97,7 @@ with tab1:
 
 with tab2:
     st.subheader("사건 현장 지도")
-    map_styles = ["carto-positron", "open-street-map", "satellite-streets"]
+    map_styles = ["carto-positron", "open-street-map", "carto-darkmatter", "white-bg"]
     map_style = st.radio("지도 스타일", map_styles, index=0, horizontal=True)
     color_candidates = [c for c in ['victim_race', 'disposition', 'victim_sex', 'year', 'city'] if c in filtered.columns]
     color_option = st.selectbox("마커 색상 기준", options=color_candidates, index=0 if color_candidates else None)
